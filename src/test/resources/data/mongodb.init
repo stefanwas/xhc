@@ -1,0 +1,13 @@
+use xhc;
+
+db.createCollection('documents');
+
+db.documents.insert(
+    {
+      "title" : "first document",
+      "content" : "This is my first XHC document",
+      "tags" : ["IT", "TEST"],
+      "createDate" : "2017-10-06",
+      "updateDate" : "2017-10-07"
+    }
+);

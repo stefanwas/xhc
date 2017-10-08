@@ -1,0 +1,17 @@
+#Eclipse
+.project
+.classpath
+.settings
+bin/
+test-output/
+
+#IntelliJ IDEA
+.idea/
+*.iml
+
+#Maven
+target/
+
+todo.txt
+/src/main/front/node_modules/
+/src/main/front/yarn.lock
