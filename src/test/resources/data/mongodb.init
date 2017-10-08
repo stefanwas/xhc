@@ -4,10 +4,10 @@ db.createCollection('documents');
 
 db.documents.insert(
     {
-      "title" : "first document",
+      "title" : "second document",
       "content" : "This is my first XHC document",
       "tags" : ["IT", "TEST"],
-      "createDate" : "2017-10-06",
-      "updateDate" : "2017-10-07"
+      "createDate" : "2017-10-06T23:02:00",
+      "updateDate" : "2017-10-07T11:00:00"
     }
 );
