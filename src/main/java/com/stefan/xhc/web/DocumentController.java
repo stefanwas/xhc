@@ -5,10 +5,7 @@ import com.stefan.xhc.repository.DocumentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,22 +34,22 @@ public class DocumentController {
     }
 
     @RequestMapping(value="/titles/{ids}", method= RequestMethod.GET)
-    public List<String> getTitlesForIds(String ids) {
-        LOG.debug("GET /document titles/{ids}", ids);
+    public List<Document> getTitlesForIds(@PathVariable String ids) {
+        LOG.debug("GET /document/titles/{ids}", ids);
         // TODO change it to POST
         String[] idsx = ids.split(",");
-        List<String> titles = documentRepository.getDocumentTitlesForIds(Arrays.asList(idsx));
+        List<Document> titles = documentRepository.getDocumentTitlesForIds(Arrays.asList(idsx));
         return titles;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void createDocument(Document document) {
+    public void createDocument(@RequestBody Document document) {
         LOG.debug("CREATE /document: {}", document.getTitle());
         documentRepository.createDocument(document);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public void updateDocument(Document document) {
+    public void updateDocument(@RequestBody Document document) {
         LOG.debug("UPDATE /document: {}", document.getTitle());
         // TODO is it necessary to have separate id here?
         documentRepository.updateDocument(document.getId(), document);

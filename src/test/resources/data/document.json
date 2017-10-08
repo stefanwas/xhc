@@ -1,7 +1,7 @@
 {
-  "title" : "first document",
-  "content" : "This is my first XHC document",
+  "title" : "third document",
+  "content" : "This is my 3 XHC document",
   "tags" : ["IT", "TEST"],
-  "createDate" : "2017-10-06",
-  "updateDate" : "2017-10-07"
+  "createDate" : "2017-10-08'T'20:59:59",
+  "updateDate" : "2017-10-08'T'23:59:59"
 }

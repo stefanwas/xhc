@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Repository
 public class DocumentRepository {
@@ -55,11 +57,17 @@ public class DocumentRepository {
         documents.remove(new ObjectId(id));
     }
 
-    public List<String> getDocumentTitlesForIds(List<String> id) {
-        MongoCursor<Document> results = documents.find().limit(MAX_RESULTS).as(Document.class);
-//        List<> TODO add
-        return null;
-    }
+    public List<Document> getDocumentTitlesForIds(List<String> ids) {
+        // returns only attributes: id, title
+        List<ObjectId> objectIds = ids.stream().map(ObjectId::new).collect(Collectors.toList());
 
+        MongoCursor<Document> allDocuments = documents
+                .find("{_id: {$in: #}}", objectIds)
+                .projection("{title:1}")
+                .as(Document.class);
+
+        List<Document> results = StreamSupport.stream(allDocuments.spliterator(), false).collect(Collectors.toList());
+        return results;
+    }
 
 }

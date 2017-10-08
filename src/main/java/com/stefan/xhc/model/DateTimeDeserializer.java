@@ -12,7 +12,7 @@ public class DateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
 
     @Override
     public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-        String dateTimeText = jsonParser.getText();
+        String dateTimeText = jsonParser.getText() != null ? jsonParser.getText() : null;
         return DateTimeUtil.parse(dateTimeText);
     }
 }
