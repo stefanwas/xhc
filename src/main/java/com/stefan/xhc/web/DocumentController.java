@@ -2,9 +2,11 @@ package com.stefan.xhc.web;
 
 import com.stefan.xhc.model.Document;
 import com.stefan.xhc.repository.DocumentRepository;
+import com.stefan.xhc.service.SearchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -20,26 +22,42 @@ public class DocumentController {
 
     @Autowired
     private DocumentRepository documentRepository;
+    @Autowired
+    private SearchService searchService;
 
-    @RequestMapping(value="/ping", method = RequestMethod.GET)
-    public String ping() {
-        return "OK";
+
+    @RequestMapping(value="/search", method= RequestMethod.GET)
+    public List<Document> search(@RequestParam (value = "phrase", required = false) String phrase) {
+        LOG.debug("GET /document/search?phrase=", phrase);
+
+        List<Document> documents;
+        if (StringUtils.isEmpty(phrase)) {
+            documents = documentRepository.getAllLiteDocuments();
+        } else {
+            List<String> documentIds = searchService.findDocumentIds(phrase);
+            documents = documentRepository.getLiteDocumentsForIds(documentIds);
+        }
+        return documents;
     }
+
+//    @RequestMapping(value="/list", method= RequestMethod.GET)
+//    public List<Document> getTitlesForIds(@RequestParam String ids) {
+//        LOG.debug("GET /document/list?ids={}", ids);
+//        // TODO change it to POST
+//        List<Document> liteDocs; // only titles and ids
+//        if (StringUtils.isEmpty(ids)) {
+//            liteDocs = documentRepository.getAllLiteDocuments();
+//        }
+//        String[] idsx = ids.split(",");
+//        liteDocs = documentRepository.getLiteDocumentsForIds(Arrays.asList(idsx));
+//        return liteDocs;
+//    }
 
     @RequestMapping(value="/{id}", method= RequestMethod.GET)
     public Document getDocument(@PathVariable String id) {
         LOG.debug("GET /document/{}", id);
         Document document = documentRepository.getDocument(id);
         return document;
-    }
-
-    @RequestMapping(value="/titles/{ids}", method= RequestMethod.GET)
-    public List<Document> getTitlesForIds(@PathVariable String ids) {
-        LOG.debug("GET /document/titles/{ids}", ids);
-        // TODO change it to POST
-        String[] idsx = ids.split(",");
-        List<Document> titles = documentRepository.getDocumentTitlesForIds(Arrays.asList(idsx));
-        return titles;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -51,8 +69,7 @@ public class DocumentController {
     @RequestMapping(method = RequestMethod.PUT)
     public void updateDocument(@RequestBody Document document) {
         LOG.debug("UPDATE /document: {}", document.getTitle());
-        // TODO is it necessary to have separate id here?
-        documentRepository.updateDocument(document.getId(), document);
+        documentRepository.updateDocument(document);
     }
 
     @RequestMapping(value="/{id}", method = RequestMethod.DELETE)

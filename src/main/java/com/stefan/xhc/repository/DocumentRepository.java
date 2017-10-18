@@ -49,18 +49,18 @@ public class DocumentRepository {
         documents.save(document);
     }
 
-    public void updateDocument(String id, Document document) {
-        documents.update(new ObjectId(id)).with(document);
+    public void updateDocument(Document document) {
+        documents.update(new ObjectId(document.getId())).with(document);
     }
 
     public void deleteDocument(String id) {
         documents.remove(new ObjectId(id));
     }
 
-    public List<Document> getDocumentTitlesForIds(List<String> ids) {
-        // returns only attributes: id, title
+    public List<Document> getLiteDocumentsForIds(List<String> ids) {
         List<ObjectId> objectIds = ids.stream().map(ObjectId::new).collect(Collectors.toList());
 
+        // returns only attributes: id, title
         MongoCursor<Document> allDocuments = documents
                 .find("{_id: {$in: #}}", objectIds)
                 .projection("{title:1}")
@@ -70,4 +70,15 @@ public class DocumentRepository {
         return results;
     }
 
+    public List<Document> getAllLiteDocuments() {
+
+        // returns only attributes: id, title
+        MongoCursor<Document> allDocuments = documents
+                .find()
+                .projection("{title:1}")
+                .as(Document.class);
+
+        List<Document> results = StreamSupport.stream(allDocuments.spliterator(), false).collect(Collectors.toList());
+        return results;
+    }
 }
