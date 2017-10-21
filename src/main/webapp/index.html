@@ -5,35 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>XHC</title>
-    <link type="text/css" rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="./index.css">
 
 </head>
 <body ng-controller="DocumentController">
-    <h1>XHC !</h1>
-    <div >
-        <input type="text" ng-model="searchPhrase" placeholder="Enter text...">
-        <button ng-click="search(searchPhrase)">Search</button>
-        <button ng-click="create()">New</button>
-        <hr>
+    <div class="container-fluid">
 
-        <div>
-            <ul>
-                <li ng-repeat="document in documents" ng-click="open(document.id)">{{document.title}}</li>
-            </ul>
+        <nav class="row navbar navbar-expand navbar-dark bg-dark ">
+            <div class="col-md-4 px-1">
+                <a class="navbar-brand" href="#" ng-click="create()">XHC</a>
+            </div>
+            <div class="col-md-4 px-1">
+                <input  type="text" class="input-md w-100 form-control" ng-model="searchPhrase" placeholder="Enter text...">
+            </div>
+            <div class="col-md-4 px-1">
+                <button type="button" class="btn btn-sm standard-btn btn-primary" ng-click="search(searchPhrase)">Search</button>
+            </div>
+        </nav>
+
+        <div class="row my-1 h-100">
+
+            <div class="col-md-3 px-1">
+                <ul class="list-group result-list h-100">
+                    <li class="list-group-item list-group-item-action py-0 px-1" ng-repeat="document in documents" ng-click="open(document.id)">{{document.title}}</li>
+                </ul>
+            </div>
+
+            <div class="col-md-9 px-1">
+                <input type="text" class="form-control py-1 px-1" ng-model="document.title" ng-blur="autosave()">
+                <textarea class="form-control py-1 px-1 my-1 h-100 w-100"   ng-model="document.content" ng-blur="autosave()"></textarea>
+            </div>
         </div>
 
-        <hr>
+        <footer class="row my-1  fixed-bottom">
+            <div class="col-md-3">
+                <p class="small px-1">Copyright 2017 WK-Pragmatics</p>
+            </div>
+            <div class="col-md-9">
+                <button type="button" class="btn btn-sm standard-btn btn-outline-danger float-left  px-1" ng-click="delete()">Delete</button>
+                <button type="button" class="btn btn-sm standard-btn btn-outline-success float-right  px-1" ng-click="save()">Save</button>
+            </div>
+        </footer>
 
-        <div>
-            <input type="text" ng-model="document.title" ng-blur="autosave()">
-            <br/>
-            <textarea ng-model="document.content" ng-blur="autosave()"></textarea>
-            <br/>
-            <button ng-click="save()">Save</button>
-            <button ng-click="delete()">Delete</button>
-
-        </div>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-resource.js"></script>

@@ -63,8 +63,10 @@ angular.module('xhc.app', ['ngResource'])
         $scope.delete = function() {
             var documentId = $scope.document.id;
             console.log("DELETE=" + documentId);
-            $scope.document = DocumentService.delete({documentId: documentId});
-            removeFromDocuments(documentId);
+            if (!_.isEmpty(documentId)) {
+                $scope.document = DocumentService.delete({documentId: documentId});
+                removeFromDocuments(documentId);
+            }
         };
 
         $scope.create = function() {
