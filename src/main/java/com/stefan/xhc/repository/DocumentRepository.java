@@ -1,6 +1,7 @@
 package com.stefan.xhc.repository;
 
 import com.mongodb.MongoClient;
+import com.mongodb.WriteResult;
 import com.stefan.xhc.model.Document;
 import org.bson.types.ObjectId;
 import org.jongo.Jongo;
@@ -45,12 +46,14 @@ public class DocumentRepository {
         return documents.findOne("{ _id: #}", new ObjectId(id)).as(Document.class);
     }
 
-    public void createDocument(Document document) {
-        documents.save(document);
+    public Document createDocument(Document document) {
+        documents.insert(document);
+        return document;
     }
 
-    public void updateDocument(Document document) {
+    public Document updateDocument(Document document) {
         documents.update(new ObjectId(document.getId())).with(document);
+        return document;
     }
 
     public void deleteDocument(String id) {

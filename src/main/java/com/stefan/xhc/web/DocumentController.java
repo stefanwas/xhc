@@ -26,8 +26,8 @@ public class DocumentController {
     private SearchService searchService;
 
 
-    @RequestMapping(value="/search", method= RequestMethod.GET)
-    public List<Document> search(@RequestParam (value = "phrase", required = false) String phrase) {
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public List<Document> search(@RequestParam(value = "phrase", required = false) String phrase) {
         LOG.debug("GET /document/search?phrase=", phrase);
 
         List<Document> documents;
@@ -53,7 +53,7 @@ public class DocumentController {
 //        return liteDocs;
 //    }
 
-    @RequestMapping(value="/{id}", method= RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Document getDocument(@PathVariable String id) {
         LOG.debug("GET /document/{}", id);
         Document document = documentRepository.getDocument(id);
@@ -61,18 +61,19 @@ public class DocumentController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void createDocument(@RequestBody Document document) {
-        LOG.debug("CREATE /document: {}", document.getTitle());
-        documentRepository.createDocument(document);
+    public Document saveDocument(@RequestBody Document document) {
+        Document savedDocument;
+        if (StringUtils.isEmpty(document.getId())) {
+            LOG.debug("CREATE /document: {}", document.getTitle());
+            savedDocument = documentRepository.createDocument(document);
+        } else {
+            LOG.debug("UPDATE /document: {}", document.getTitle());
+            savedDocument = documentRepository.updateDocument(document);
+        }
+        return savedDocument;
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public void updateDocument(@RequestBody Document document) {
-        LOG.debug("UPDATE /document: {}", document.getTitle());
-        documentRepository.updateDocument(document);
-    }
-
-    @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteDocument(@PathVariable String id) {
         LOG.debug("DELETE /document: {}", id);
         documentRepository.deleteDocument(id);
