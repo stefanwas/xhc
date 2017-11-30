@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -47,11 +48,16 @@ public class DocumentRepository {
     }
 
     public Document createDocument(Document document) {
+        LocalDateTime dateTime = LocalDateTime.now();
+        document.setCreateDate(dateTime);
+        document.setUpdateDate(dateTime);
         documents.insert(document);
         return document;
     }
 
     public Document updateDocument(Document document) {
+        LocalDateTime dateTime = LocalDateTime.now();
+        document.setUpdateDate(dateTime);
         documents.update(new ObjectId(document.getId())).with(document);
         return document;
     }

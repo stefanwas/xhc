@@ -17,6 +17,10 @@ angular.module('xhc.app', ['ngResource'])
         $scope.original = {};
         $scope.document = {};
 
+        $scope.titleChanged = false;
+        $scope.contentChanged = false;
+
+
         function setOriginal(document) {
             $scope.original = _.clone(document);
         }
@@ -28,6 +32,8 @@ angular.module('xhc.app', ['ngResource'])
         $scope.search = function(searchPhrase) {
             console.log("SEARCH=" + searchPhrase);
             $scope.documents = SearchService.query({phrase: searchPhrase});
+            $scope.document = {};
+            setOriginal({});
         };
 
         $scope.open = function(documentId) {
@@ -41,22 +47,27 @@ angular.module('xhc.app', ['ngResource'])
             );
         };
 
-        $scope.autosave = function() {
-        //TODO improve save condition
-            console.log("AUTOSAVE=" + $scope.document.id);
-            if (!_.isEmpty($scope.document.title) && !_.isEmpty($scope.document.content)
-                && ($scope.original.title != $scope.document.title || $scope.original.content != $scope.document.content)) {
-                $scope.save();
+        $scope.detectChanges = function() {
+            if ($scope.original.title != $scope.document.title) {
+                $scope.titleChanged = true;
+            } else {
+                $scope.titleChanged = false;
             }
 
-        }
+            if ($scope.original.content != $scope.document.content) {
+                $scope.contentChanged = true;
+            } else {
+                $scope.contentChanged = false;
+            }
+        };
 
         $scope.save = function() {
             console.log("SAVE=" + $scope.document.id);
             DocumentService.save($scope.document, function(document) {
-                if ($scope.document.id == null) {
-                    $scope.document.id = document.id;
-                }
+                $scope.document = document;
+                setOriginal($scope.document);
+                $scope.titleChanged = false;
+                $scope.contentChanged = false;
             });
         };
 
@@ -66,17 +77,36 @@ angular.module('xhc.app', ['ngResource'])
             if (!_.isEmpty(documentId)) {
                 $scope.document = DocumentService.delete({documentId: documentId});
                 removeFromDocuments(documentId);
+                $scope.new();
             }
         };
 
-        $scope.create = function() {
-            console.log("CREATE=NEW");
+        $scope.new = function() {
+            console.log("NEW!");
             $scope.document = {
                 id : null,
                 title : "",
                 content : ""
             };
             setOriginal($scope.document);
+            $scope.titleChanged = false;
+            $scope.contentChanged = false;
         };
 
-    }]);
+        $scope.search();
+        $scope.new();
+    }])
+
+    .directive('ngEnter', function() {
+        return function(scope, element, attrs) {
+            element.bind("keydown keypress", function(event) {
+                if(event.which === 13) {
+                    scope.$apply(function(){
+                        scope.$eval(attrs.ngEnter, {'event': event});
+                    });
+                    event.preventDefault();
+                }
+            });
+        };
+    });
+

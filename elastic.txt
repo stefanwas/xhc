@@ -1,0 +1,61 @@
+1. Create index (index name: 'xhc', document type: 'document' ):
+
+PUT /xhc
+{
+ "mappings" : {
+  "document" : {
+   "properties" : {
+    "title" : {"type": "text" },
+    "content" : {"type": "text" },
+    "mongo_id" : {"type": "text"}
+   }
+  }
+ }
+}
+
+2. Delete index
+
+DELETE /xhc
+
+3. See all indices
+
+GET _cat/indices?v
+
+4. Add document:
+
+POST /xhc/document
+{
+    "title" : "test document 1",
+    "content" : "This is my first test document."
+}
+
+albo pod zadanym id=1
+
+PUT /xhc/document/1
+{
+    "title" : "test document 1",
+    "content" : "This is my first test document."
+}
+
+5. Search...
+
+GET /xhc/document/_search?q=query
+
+or
+
+GET /xhc/document/_search
+{
+    "query" : {
+        "query_string" : {
+            "query" : "test"
+        }
+    }
+}
+
+
+GET /xhc/document/_search
+{
+    "query" : {
+        "term" : { "content": "test"}
+    }
+}
