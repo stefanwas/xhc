@@ -12,7 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.core.version>4.3.5.RELEASE</spring.core.version>
-        <spring.security.version>4.2.2.RELEASE</spring.security.version>
+        <spring.security.version>4.2.3.RELEASE</spring.security.version>
     </properties>
 
     <build>
@@ -21,7 +21,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
+                <version>3.7</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -112,6 +112,28 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-security</artifactId>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.security.oauth</groupId>-->
+            <!--<artifactId>spring-security-oauth2</artifactId>-->
+        <!--</dependency>-->
+
+
+
         <!-- this is required to return json responses it conflicts with-->
         <!--<dependency>-->
             <!--<groupId>com.fasterxml.jackson.core</groupId>-->
@@ -178,6 +200,7 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>2.8.47</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

@@ -3,14 +3,25 @@ package com.stefan.xhc.web;
 import com.stefan.xhc.model.Document;
 import com.stefan.xhc.repository.DocumentRepository;
 import com.stefan.xhc.service.SearchService;
+import com.stefan.xhc.utils.DocumentUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @RestController
 @RequestMapping("/document")
@@ -77,6 +88,42 @@ public class DocumentController {
     public void deleteDocument(@PathVariable String id) {
         LOG.debug("DELETE /document: {}", id);
         documentRepository.deleteDocument(id);
+    }
+
+    //TODO check it working
+    @RequestMapping(value = "/exportall", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public ResponseEntity<byte[]> exportAllDocuments() throws Exception {
+        List<Document> liteDocuments = documentRepository.getAllLiteDocuments();
+
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        ZipOutputStream zipOutput = new ZipOutputStream(output);
+
+        for (Document lite : liteDocuments) {
+            Document doc = documentRepository.getDocument(lite.getId());
+            writeDocumentToZipStream(zipOutput, doc);
+        }
+
+        zipOutput.flush();
+        zipOutput.close();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", "all-documents.");
+
+
+        return new ResponseEntity<>(output.toByteArray(), headers, HttpStatus.OK);
+    }
+
+    private void writeDocumentToZipStream(ZipOutputStream zipOutput, Document doc) throws IOException {
+        String json = DocumentUtil.serialize(doc);
+        zipOutput.putNextEntry(new ZipEntry(doc.getTitle()));
+        zipOutput.write(json.getBytes());
+        zipOutput.closeEntry();
+    }
+
+
+    public void importDocuments(byte[] data) {
+
     }
 
 }

@@ -29,3 +29,8 @@ ul {
     overflow-y: auto;
     max-height: 574px;
 }
+
+.active {
+    color: red;
+    font-weight: bolder;
+}
