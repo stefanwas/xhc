@@ -5,9 +5,9 @@ angular.module('xhc.app.config', ['ui.router'])
     .config(function($stateProvider, $urlRouterProvider) {
 
         // in this state user is logged out
-        var loginState = {
-            name: 'login',
-            url: '/login',
+        var outState = {
+            name: 'out',
+            url: '/out',
             views: {
                 'header-view': {
                     component: 'headerComponent'
@@ -26,15 +26,15 @@ angular.module('xhc.app.config', ['ui.router'])
         };
 
         // in this state user is logged in
-        var appState = {
-            name: 'app',
-            url: '/app',
+        var inState = {
+            name: 'in',
+            url: '/in',
             views: {
                 'header-view': {
                     component: 'headerComponent'
                 },
-                'app-view': {
-                    component: 'appComponent'
+                'main-view': {
+                    component: 'mainComponent'
                 },
                 'footer-view': {
                  templateUrl: 'templates/footer.html'
@@ -46,7 +46,7 @@ angular.module('xhc.app.config', ['ui.router'])
             }
         };
 
-        $stateProvider.state(loginState);
-        $stateProvider.state(appState);
-//        $urlRouterProvider.otherwise('login');
+        $stateProvider.state(outState);
+        $stateProvider.state(inState);
+        $urlRouterProvider.otherwise('out');
     });
