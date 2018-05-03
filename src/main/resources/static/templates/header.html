@@ -1,7 +1,6 @@
-<header class="row navbar navbar-expand bg-dark">
-    <div class="col-md-4 px-1">
-        <span>XHC+</span>
-        <span ng-if="authenticated">Logged in : {{user}} | <a href="#" ng-click="$ctrl.logout()">Log out</a></span>
-        <span ng-if="!authenticated">Logged out</span>
-    </div>
-</header>
+<div id="header">
+    <div id="xhc">XHC+</div>
+    <div id="user" ng-if="authenticated">{{user}}</div>
+    <div id="login" ng-if="!authenticated"> | <a href="#" ng-click="$ctrl.login()">Log in</a></div>
+    <div id="logout" ng-if="authenticated"> | <a href="#" ng-click="$ctrl.logout()">Log out</a></div>
+</div>

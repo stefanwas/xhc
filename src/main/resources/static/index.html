@@ -4,32 +4,30 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>XHC</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" crossorigin="anonymous">
+    <title>XHC+</title>
     <link type="text/css" rel="stylesheet" href="./index.css">
 
 </head>
-<body ng-controller="DocumentController" class="h-100">
-<div class="container h-100">
+<body ng-controller="DocumentController">
+
+<div id="container">
     <div ui-view="header-view"></div>
-    <div ui-view="login-view"></div>
-    <div ui-view="main-view"></div>
+    <div ui-view="body-view"></div>
     <div ui-view="footer-view"></div>
 </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-resource.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-resource.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
 
-    <script src="./app/app-services.js"></script>
-    <script src="./app/app-config.js"></script>
-    <script src="./app/components/header.js"></script>
-    <script src="./app/components/login.js"></script>
-    <script src="./app/components/main.js"></script>
-    <script src="./app/app.js"></script>
+<script src="./app/app-services.js"></script>
+<script src="./app/app-config.js"></script>
+<script src="./app/components/header.js"></script>
+<script src="./app/components/login.js"></script>
+<script src="./app/components/main.js"></script>
+<script src="./app/app.js"></script>
 
 </body>
 </html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--https://css-tricks.com/snippets/css/a-guide-to-flexbox/-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>FLEX layout test</title>
+    <!--<link type="text/css" rel="stylesheet" href="./flex.css">-->
+
+    <style>
+
+        .text-input {
+            height: 23px;
+            font-size: 15px;
+        }
+
+        .button {
+            height: 29px;
+            width: 75px;
+            margin-right: 4px;
+            padding: 1px;
+        }
+
+        body {
+            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji";
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+        }
+        div {
+            padding: 2px;
+        }
+
+        ul {
+            list-style-type: none;
+            overflow: hidden;
+            overflow-y: auto;
+            padding-left: 0px;
+            max-height: 240px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+        li {
+            font-size: 15px;
+            margin-left: 0px;
+        }
+
+        #header {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+            justify-content:flex-start;
+            align-items: center;
+
+            background: #212529;
+            color: white;
+            margin-bottom: 30px;
+        }
+        #xhc {
+            flex-grow:1;
+            font-size: 140%;
+        }
+
+
+        #main {
+            display: flex;
+            flex-flow: column;
+        }
+
+        #r1 {
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+        }
+
+        #search-input {
+            width: 500px;
+        }
+        #search-button {
+            margin-left: 5px;
+        }
+
+        #footer {
+            color: #212529;
+            text-align: left;
+            line-height: 1.5;
+            font-size: 12px;
+        }
+
+        #r2 {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+        }
+        #list {
+            border-style: solid;
+            border-width: 1px;
+            margin-top: 6px;
+            margin-bottom: 6px;
+        }
+
+        #title-input {
+            width: 100%;
+        }
+
+        #text-area{
+            min-height: 400px;
+            line-height: 1.2 !important;
+            width: 100%;
+        }
+        #list {
+            width: 300px;
+        }
+
+        #content {
+            width: 1000px;
+        }
+
+        #buttons {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+        }
+        #delete-button {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="header">
+        <div id="xhc">XHC+</div>
+        <div id="user">User</div>
+        <div id="logaction"> | log out</div>
+    </div>
+    <div id="main">
+        <div id="r1">
+            <input id="search-input" type="text" class="text-input" ng-model="searchPhrase" ng-enter="search(searchPhrase)" placeholder="Enter text...">
+            <button id="search-button" type="button" class="button" ng-click="search(searchPhrase)">Search</button>
+        </div>
+        <div id="r2">
+            <div id="list">
+                <ul class="list">
+                    <li class="list-item" ng-repeat="document in documents" ng-click="open(document.id)">{{document.title}}</li>
+                    <li class="list-item">aaa</li>
+                </ul>
+            </div>
+            <div id="content">
+                <div id="title">
+                    <input id="title-input" type="text" class="text-input" ng-class="{changed: titleChanged}" ng-model="document.title" ng-blur="detectChanges()">
+                </div>
+                <div id="text">
+                    <textarea id="text-area" class="text-area" ng-class="{changed: contentChanged}" ng-model="document.content" ng-blur="detectChanges()"></textarea>
+                </div>
+                <div id="buttons">
+                    <button id="delete-button" type="button" class="button" ng-click="delete()">Delete</button>
+                    <button id="new-button" type="button" class="button" ng-click="new()">New</button>
+                    <button id="save-button" type="button" class="button" ng-click="save()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">Copyright 2017 WK-Pragmatics</div>
+</div>
+</body>
+</html>

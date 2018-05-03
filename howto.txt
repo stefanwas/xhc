@@ -6,8 +6,7 @@ mongod --dbpath /home/wojtek/data/mongodb  &    # startuje proces demona bazy mo
 
 2. Start Elastic Search
 
-cd Software/elasticsearch-5.6.3/bin
-./elasticsearch
+cd Software/elasticsearch-5.6.3/bin && ./elasticsearch
 
 3. Start the main app
 

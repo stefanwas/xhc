@@ -12,7 +12,7 @@ angular.module('xhc.app.config', ['ui.router'])
                 'header-view': {
                     component: 'headerComponent'
                 },
-                'login-view': {
+                'body-view': {
                     component: 'loginComponent'
                 },
                 'footer-view': {
@@ -33,7 +33,7 @@ angular.module('xhc.app.config', ['ui.router'])
                 'header-view': {
                     component: 'headerComponent'
                 },
-                'main-view': {
+                'body-view': {
                     component: 'mainComponent'
                 },
                 'footer-view': {
@@ -48,5 +48,5 @@ angular.module('xhc.app.config', ['ui.router'])
 
         $stateProvider.state(outState);
         $stateProvider.state(inState);
-        $urlRouterProvider.otherwise('out');
+        $urlRouterProvider.otherwise('out');    // TODO maybe not needed?
     });

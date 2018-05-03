@@ -8,7 +8,7 @@ angular.module('xhc.app.component.login', ['ui.router', 'xhc.app.services'])
         templateUrl : 'templates/login.html',
 
         controller: ['$scope', '$state', 'LoginService', function($scope, $state, LoginService) {
-            $scope.user = null;     // it is also possible to use this instead of $scope
+            $scope.user = null;     // it is also possible to use this instead of $scope.authenticated
 
             $scope.credentials = {};
             $scope.credentials.username = "";
